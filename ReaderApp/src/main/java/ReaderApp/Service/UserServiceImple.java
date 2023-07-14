@@ -10,8 +10,8 @@ import ReaderApp.Model.User;
 import ReaderApp.Repositery.UserRepo;
 
 @Service
-public class UserServiceImple implements UserService{
-	
+public class UserServiceImple implements UserService {
+
 	@Autowired
 	private UserRepo uRepo;
 
@@ -22,20 +22,27 @@ public class UserServiceImple implements UserService{
 	}
 
 	@Override
-	public User updateUser(User user, Long id)throws InvalidId {
+	public User updateUser(User user, Long id) throws InvalidId {
+
+		// finding use Id by using userRepo
 		Optional<User> u1 = uRepo.findById(id);
+
+		// Instance of a User class
 		User u2 = new User();
 
-		if(u1.isPresent()) {
+		// If user present we can update his details
+		if (u1.isPresent()) {
 			u2.setName(user.getName());
 			u2.setLatitude(user.getLatitude());
 			u2.setLongitude(user.getLongitude());
-			
+
 			uRepo.save(u2);
 			return u2;
 		}
+
+		// If user not present it's throwing InvalidId Exception
 		else {
-			throw new InvalidId("User with Id "+id+" does not exist");
+			throw new InvalidId("User with Id " + id + " does not exist");
 		}
 	}
 
