@@ -1,8 +1,11 @@
 package ReaderApp.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,6 +32,12 @@ public class UserController {
 	public ResponseEntity<User> updateData(@RequestBody User user, @PathVariable Long id) throws InvalidId{
 		User upd = uService.updateUser(user, id);
 		return new ResponseEntity<User>(upd,HttpStatus.ACCEPTED);		
+	}
+	
+	@GetMapping("/get_users/{n}")
+	public ResponseEntity<List<User>> getNearestUsersList(@PathVariable Integer n) throws InvalidId{
+		List<User> view_all = uService.getNearestUsersList(n);
+		return new ResponseEntity<List<User>>(view_all,HttpStatus.OK);
 	}
 
 }
